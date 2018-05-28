@@ -1,0 +1,17 @@
+﻿<Window x:Class="Content.CatalogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Content"
+        mc:Ignorable="d"
+        Title="Каталог" Height="450" Width="500">
+    <Grid x:Name="CatalogWindow1">
+        <ListBox x:Name="ListCatalog" HorizontalAlignment="Left" Height="160" Margin="10,10,0,0" VerticalAlignment="Top" Width="222"/>
+        <Button x:Name="ButtonUse" Content="Використати" HorizontalAlignment="Left" Margin="253,62,0,0" VerticalAlignment="Top" Width="75" Click="ButtonUse_Click"/>
+        <TreeView x:Name="TreeViewCatalog" HorizontalAlignment="Left" Height="234" Margin="10,175,0,0" VerticalAlignment="Top" Width="222"/>
+        <ListBox x:Name="ListBoxCatalog" HorizontalAlignment="Left" Height="234" Margin="237,175,0,0" VerticalAlignment="Top" Width="245"/>
+        <Button x:Name="Button_delete_catalog" Content="Видалити" HorizontalAlignment="Left" Margin="391,23,0,0" VerticalAlignment="Top" Width="75" Click="Button_delete_catalog_Click"/>
+
+    </Grid>
+</Window>
