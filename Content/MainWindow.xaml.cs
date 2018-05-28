@@ -43,11 +43,13 @@ namespace Content
         Excel.Range excelcellsGroup;
         Excel.Range excelcellsParent;
         string pathfile;
+        public static string PathCatalog = "Catalog\\CatalogContent.xml";//default
         int posistion = 0;
         public static List<ExcelTypes> ListOfTypes;        
         List<TreeViewItem> treeViewItems;
         EditWindow editWindow;
         CatalogWindow catalogWindow;
+        CatalogWords catalogWords;
         List<ExcelTypes> catalogsfromfile;
         /// <summary>
         /// Button for check erors and insert "Измерение_Характеристики" with empty values for geting data       
@@ -56,57 +58,60 @@ namespace Content
         /// <param name="e"></param>
         private async void Button1_Click(object sender, RoutedEventArgs e)
         {
-            BusyIndicator.IsBusy = true;
-            await Task.Run(() =>
-            {
-                //Create COM Objects. Create a COM object for everything that is referenced            
-                xlWorksheet = xlWorkbook.Sheets[1];
-            Start:
-            xlRange = xlWorksheet.UsedRange;
-            int colCount = xlRange.Columns.Count;
-            int rowCount = xlRange.Rows.Count;
-            //insert "Измерение_Характеристики" previous "Значение_Характеристики"
             try
             {
-                for (int i = 2; i <= colCount; i++)
+                BusyIndicator.IsBusy = true;
+                await Task.Run(() =>
                 {
-                    excelcells = (Excel.Range)xlWorksheet.Cells[1, i];
-                    excelcells1 = (Excel.Range)xlWorksheet.Cells[1, i - 1];
-                    if (Convert.ToString(excelcells.Value2) == "Значение_Характеристики" && Convert.ToString(excelcells1.Value2) != "Измерение_Характеристики")//Измерение_Характеристики
-                    {
-                        Read(excelcells.Address);//func                    
-                        goto Start;// I like use goto ))
-                    }
-                }
-            }
-            catch { MessageBox.Show("Помилка!"); }
-            //check for zero values in price where colunm name like Цена
-            try
-            {
-                for (int i = 1; i <= colCount; i++)
+                try
                 {
-                    excelcells = (Excel.Range)xlWorksheet.Cells[1, i];
-                    if (Convert.ToString(excelcells.Value2) == "Цена")//Измерение_Характеристики
+                    //Create COM Objects. Create a COM object for everything that is referenced            
+                    xlWorksheet = xlWorkbook.Sheets[1];
+                    Start:
+                    xlRange = xlWorksheet.UsedRange;
+                    int colCount = xlRange.Columns.Count;
+                    int rowCount = xlRange.Rows.Count;
+
+                    //insert "Измерение_Характеристики" previous "Значение_Характеристики"
+
+                    for (int i = 2; i <= colCount; i++)
                     {
-                        posistion = i;
-                    }
-                }
-                if (posistion != 0)
-                {
-                    for (int i = 1; i <= rowCount; i++)
-                    {
-                        excelcells = (Excel.Range)xlWorksheet.Cells[i, posistion];
-                        if (Convert.ToString(excelcells.Value2) == "0")//Измерение_Характеристики
+                        excelcells = (Excel.Range)xlWorksheet.Cells[1, i];
+                        excelcells1 = (Excel.Range)xlWorksheet.Cells[1, i - 1];
+                        if (Convert.ToString(excelcells.Value2) == "Значение_Характеристики" && Convert.ToString(excelcells1.Value2) != "Измерение_Характеристики")//Измерение_Характеристики
                         {
-                            ((Range)xlWorksheet.Rows[i, Missing.Value]).Delete(XlDeleteShiftDirection.xlShiftUp);
-                            i = i - 2;
+                            Read(excelcells.Address);//func                    
+                            goto Start;// I like use goto ))
                         }
                     }
-                }
+                    //check zero values
+                    for (int i = 1; i <= colCount; i++)
+                    {
+                        excelcells = (Excel.Range)xlWorksheet.Cells[1, i];
+                        if (Convert.ToString(excelcells.Value2) == "Цена")//Измерение_Характеристики
+                        {
+                            posistion = i;
+                        }
+                    }
+                    if (posistion != 0)
+                    {
+                        for (int i = 1; i <= rowCount; i++)
+                        {
+                            excelcells = (Excel.Range)xlWorksheet.Cells[i, posistion];
+                            if (Convert.ToString(excelcells.Value2) == "0")//Измерение_Характеристики
+                            {
+                                ((Range)xlWorksheet.Rows[i, Missing.Value]).Delete(XlDeleteShiftDirection.xlShiftUp);
+                                i = i - 2;
+                            }
+                        }
+                    }
+                    }
+                    catch { MessageBox.Show("Виберіть файл для роботи!"); }
+                });
+            
+                BusyIndicator.IsBusy = false;
             }
-            catch { MessageBox.Show("Помилка"); }
-            });
-            BusyIndicator.IsBusy = false;
+            catch { MessageBox.Show("Виберіть файл для роботи!"); BusyIndicator.IsBusy = false; }
         }
         /// <summary>
         /// function for replace empty name of field for Измерение_Характеристики
@@ -126,111 +131,7 @@ namespace Content
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private  void ReadFromFile_Click(object sender, RoutedEventArgs e)
-        {           
-              try
-              {
-                    xlWorksheet = xlWorkbook.Sheets[2];
-                    //read from file real srtucture
-                    xlRange = xlWorksheet.UsedRange;
-                    int colCount = xlRange.Columns.Count;
-                    int colRows = xlRange.Rows.Count;
-                    ListOfTypes = new List<ExcelTypes>();
 
-                    for (int j = 2; j <= colRows; j++)
-                    {
-                        excelcells1 = (Excel.Range)xlWorksheet.Cells[j, 2];
-                        excelcellsGroup = (Excel.Range)xlWorksheet.Cells[j, 3];
-                        excelcellsParent = (Excel.Range)xlWorksheet.Cells[j, 5];
-                        if (Convert.ToString(excelcells1.Value2) != null)
-                        {
-                            ListOfTypes.Add(new ExcelTypes(Convert.ToString(excelcells1.Value2), Convert.ToString(excelcellsGroup.Value2), Convert.ToString(excelcellsParent.Value2)));
-                        }
-                    }                
-            //  read from xml catalog
-            XmlSerializer formatter = new XmlSerializer(typeof(List<ExcelTypes>));       
-            try
-            {
-                using (FileStream fs = new FileStream("CatalogContent.xml", FileMode.Open))
-                {
-                    List<ExcelTypes> newListWorkers = (List<ExcelTypes>)formatter.Deserialize(fs);
-                    catalogsfromfile = newListWorkers;
-                }
-            }
-            catch { MessageBox.Show("Файл CatalogContent.xml відсутній"); }
-            //
-            foreach (var listreal in ListOfTypes)
-            {
-                foreach (var listfile in catalogsfromfile)
-                {
-                    if (listreal.value == listfile.value)
-                    {
-                        listreal.Info = listfile.Info;
-                    }
-                }
-            }
-            //
-            treeViewItems = new List<TreeViewItem>();
-            foreach (var item in ListOfTypes)//create header for tree
-            {
-                if (item.ParentId == null)
-                {
-                    treeViewItems.Add(new TreeViewItem() { Header = item.value });
-                }
-            }
-            //
-            foreach (var item in ListOfTypes)//build tree
-            {
-                if (item.ParentId != null)
-                {
-                    foreach (var grid in ListOfTypes)
-                    {
-                        if (item.ParentId == grid.GroupId)
-                        {
-                            foreach (var ite in treeViewItems)
-                                if (grid.value == Convert.ToString(ite.Header))
-                                {
-                                    ite.Items.Add(new TreeViewItem() { Header = item.value });
-                                }
-                        }
-                    }
-                }
-            }
-            foreach (var it in treeViewItems) { tree.Items.Add(it); }
-              }
-                catch { MessageBox.Show("Виберіть файл");}
-        }
-
-        public void GenerateCatalog()//dont using
-        {
-            XmlSerializer formatter = new XmlSerializer(typeof(List<Catalog>));
-            catalogsfromfile = new List<ExcelTypes>();
-            //deserialize
-            try
-            {
-                using (FileStream fs = new FileStream("CatalogContent.xml", FileMode.Open))
-                {
-                    List<ExcelTypes> newListWorkers = (List<ExcelTypes>)formatter.Deserialize(fs);
-                    //View_Employers.ItemsSource = newListWorkers;
-                    catalogsfromfile = newListWorkers;
-                }
-            }
-            catch { MessageBox.Show("Файл CatalogContent.xml відсутній"); }
-            //
-            MessageBox.Show("'");
-            /* if (File.Exists("CatalogContent.xml"))//temp delete for real view info
-            {
-                File.Delete("CatalogContent.xml");
-            }
-
-            using (FileStream fs = new FileStream("CatalogContent.xml", FileMode.OpenOrCreate))
-            {
-                formatter.Serialize(fs, catalogs);
-            }
-            */
-            //check for new catalogs names
-
-        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             XmlSerializer formatter = new XmlSerializer(typeof(List<ExcelTypes>));
@@ -256,19 +157,21 @@ namespace Content
         /// <param name="e"></param>
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-            TreeViewItem items = tree.SelectedItem as TreeViewItem;
-            string selit = items.Header.ToString();
-            ListBoxInfo.ItemsSource = null;
-            foreach (var item in ListOfTypes)
+            try
             {
-                if (selit == item.value)
+                TreeViewItem items = tree.SelectedItem as TreeViewItem;
+                string selit = items.Header.ToString();
+                ListBoxInfo.ItemsSource = null;
+                foreach (var item in ListOfTypes)
                 {
-                    item.Info.Add("keyinfo");
-                    ListBoxInfo.ItemsSource = item.Info;
+                    if (selit == item.value)
+                    {
+                        item.Info.Add("keyinfo");
+                        ListBoxInfo.ItemsSource = item.Info;
+                    }
                 }
-            }
-
-        }
+            }catch { MessageBox.Show("Виберіть файл для роботи!");}
+}
         /// <summary>
         /// add new item in listbox
         /// </summary>
@@ -363,44 +266,102 @@ namespace Content
             }
             catch { MessageBox.Show("Помилка"); this.IsEnabled = true; }
         }
-/// <summary>
-/// Save
-/// </summary>
-/// <param name="sender"></param>
-/// <param name="e"></param>
+        public void ClosedCatalog(object eventt, System.EventArgs eventArgs)//delegate for event Catalog
+        {
+            catalogsfromfile = null;
+            tree.Items.Clear();
+            ListBoxInfo.ItemsSource = null;
+            //ListBoxInfo.Items.Clear();
+            XmlSerializer formatter = new XmlSerializer(typeof(List<ExcelTypes>));
+            try
+            {
+                using (FileStream fs = new FileStream(PathCatalog, FileMode.Open))
+                {
+                    List<ExcelTypes> newListWorkers = (List<ExcelTypes>)formatter.Deserialize(fs);
+                    catalogsfromfile = newListWorkers;
+                }
+            }
+            catch { MessageBox.Show("Файл " + PathCatalog + "відсутній"); }
+            try
+            {
+                foreach (var listreal in ListOfTypes)
+                {
+                    foreach (var listfile in catalogsfromfile)
+                    {
+                        if (listreal.value == listfile.value)
+                        {
+                            listreal.Info = listfile.Info;
+                        }
+                    }
+                }
+                //
+                treeViewItems = new List<TreeViewItem>();
+                foreach (var item in ListOfTypes)//create header for tree
+                {
+                    if (item.ParentId == null)
+                    {
+                        treeViewItems.Add(new TreeViewItem() { Header = item.value });
+                    }
+                }
+                //
+                foreach (var item in ListOfTypes)//build tree
+                {
+                    if (item.ParentId != null)
+                    {
+                        foreach (var grid in ListOfTypes)
+                        {
+                            if (item.ParentId == grid.GroupId)
+                            {
+                                foreach (var ite in treeViewItems)
+                                    if (grid.value == Convert.ToString(ite.Header))
+                                    {
+                                        ite.Items.Add(new TreeViewItem() { Header = item.value });
+                                    }
+                            }
+                        }
+                    }
+                }
+                foreach (var it in treeViewItems) { tree.Items.Add(it); }
+                this.IsEnabled = true;
+            }
+            catch { MessageBox.Show("Ви не відкрили файл каталог!"); this.IsEnabled = true; }
+        }
+        /// <summary>
+        /// Save
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            XmlSerializer formatter = new XmlSerializer(typeof(List<ExcelTypes>));
-            if (File.Exists("Catalog\\CatalogContent.xml"))//temp delete for real view info
+            try
             {
-                File.Delete("Catalog\\CatalogContent.xml");
+                XmlSerializer formatter = new XmlSerializer(typeof(List<ExcelTypes>));
+                string reservname = "Catalog\\ReservCatalogContent" + DateTime.Now.ToString("yyyy-MM-dd hh_mm_ss") + ".xml";
+                if (ListOfTypes != null)
+                {
+                    using (FileStream fs = new FileStream(reservname, FileMode.Create))
+                    {
+                        formatter.Serialize(fs, ListOfTypes);
+                    }
+                    if (File.Exists("Catalog\\CatalogContent.xml"))//temp delete for real view info
+                    {
+                        File.Delete("Catalog\\CatalogContent.xml");
+                    }
+                    using (FileStream fs = new FileStream("Catalog\\CatalogContent.xml", FileMode.OpenOrCreate))
+                    {
+                        formatter.Serialize(fs, ListOfTypes);
+                    }
+                    MessageBox.Show("Резервна копія каталога збережена\n " + reservname + "");                    
+                }
+                else { MessageBox.Show("Ви не відкрили каталог для роботи!"); }
             }
-            using (FileStream fs = new FileStream("Catalog\\CatalogContent.xml", FileMode.OpenOrCreate))
-            {
-                formatter.Serialize(fs, ListOfTypes);
-            }
-            string reservname = "Catalog\\ReservCatalogContent" + DateTime.Now.ToString("yyyy-MM-dd hh_mm_ss") + ".xml";
-            using (FileStream fs = new FileStream(reservname, FileMode.Create))
-            {
-                formatter.Serialize(fs, ListOfTypes);
-            }
-            MessageBox.Show("Saved");
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            Marshal.ReleaseComObject(xlRange);
-            Marshal.ReleaseComObject(xlWorksheet);
-            xlWorkbook.Close();
-            Marshal.ReleaseComObject(xlWorkbook);
-            xlApp.Quit();
-            Marshal.ReleaseComObject(xlApp);
-            MessageBox.Show("Done");
+            catch { MessageBox.Show("Помилка"); }
         }
         /// <summary>
         /// check for errors
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
-        
+        /// <param name="e"></param>       
      
         private void MenuItem_Click_Exit(object sender, RoutedEventArgs e)
         {
@@ -418,13 +379,76 @@ namespace Content
         {
 
         }
+        /// <summary>
+        /// update data and view of tree
+        /// search similar data in catalog and real file
+        /// </summary>
+        /// <param name="excelTypes"></param>
+        public void UpdateData()
+        {
+            catalogsfromfile = null;
+            tree.Items.Clear();
+            ListBoxInfo.Items.Clear();
+            XmlSerializer formatter = new XmlSerializer(typeof(List<ExcelTypes>));
+            try
+            {
+                using (FileStream fs = new FileStream(PathCatalog, FileMode.Open))
+                {
+                    List<ExcelTypes> newListWorkers = (List<ExcelTypes>)formatter.Deserialize(fs);
+                    catalogsfromfile = newListWorkers;
+                }                
+            }
+            catch { MessageBox.Show("Файл " + PathCatalog + "відсутній"); }
+            foreach (var listreal in ListOfTypes)
+            {
+                foreach (var listfile in catalogsfromfile)
+                {
+                    if (listreal.value == listfile.value)
+                    {
+                        listreal.Info = listfile.Info;
+                    }
+                }
+            }
+            //
+            treeViewItems = new List<TreeViewItem>();
+            foreach (var item in ListOfTypes)//create header for tree
+            {
+                if (item.ParentId == null)
+                {
+                    treeViewItems.Add(new TreeViewItem() { Header = item.value });
+                }
+            }
+            //
+            foreach (var item in ListOfTypes)//build tree
+            {
+                if (item.ParentId != null)
+                {
+                    foreach (var grid in ListOfTypes)
+                    {
+                        //grid.Keys = new List<List<string>>();
+                        //grid.Keys.Add(new List<string> { "1","2","3"});
+                        if (item.ParentId == grid.GroupId)
+                        {
+                            foreach (var ite in treeViewItems)
+                                if (grid.value == Convert.ToString(ite.Header))
+                                {
+                                    ite.Items.Add(new TreeViewItem() { Header = item.value });
+                                }
+                        }
+                    }
+                }
+            }
+            
+            foreach (var it in treeViewItems) { tree.Items.Add(it); }
+        }
+       
 /// <summary>
 /// Button fron menu
 /// open and save path to file
 /// </summary>
 /// <param name="sender"></param>
 /// <param name="e"></param>
-        private void MenuItem_Click_Open(object sender, RoutedEventArgs e)
+        public void MenuItem_Click_Open(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Multiselect = true;
@@ -435,7 +459,32 @@ namespace Content
                 pathfile = openFileDialog.FileName;
                 xlApp = new Excel.Application();
                 xlWorkbook = xlApp.Workbooks.Open(pathfile);
-            }            
+            }
+         //   try
+          //  {
+                xlWorksheet = xlWorkbook.Sheets[2];
+                //read from file real srtucture
+                xlRange = xlWorksheet.UsedRange;
+                int colCount = xlRange.Columns.Count;
+                int colRows = xlRange.Rows.Count;
+                ListOfTypes = new List<ExcelTypes>();
+
+                for (int j = 2; j <= colRows; j++)
+                {
+                    excelcells1 = (Excel.Range)xlWorksheet.Cells[j, 2];
+                    excelcellsGroup = (Excel.Range)xlWorksheet.Cells[j, 3];
+                    excelcellsParent = (Excel.Range)xlWorksheet.Cells[j, 5];
+                    if (Convert.ToString(excelcells1.Value2) != null)
+                    {
+                        ListOfTypes.Add(new ExcelTypes(Convert.ToString(excelcells1.Value2), Convert.ToString(excelcellsGroup.Value2), Convert.ToString(excelcellsParent.Value2)));
+                    }
+                }                
+                UpdateData();
+                //  read from xml catalog
+                
+                //                                
+           // }
+          //  catch { MessageBox.Show("Виберіть файл"); }
         }
 
         private void ListBoxInfo_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -560,10 +609,33 @@ namespace Content
         }
 
         private void MenuItem_Click_catalog_views(object sender, RoutedEventArgs e)
-        {
+        {            
             catalogWindow = new CatalogWindow();
             catalogWindow.Show();
-           
+            this.IsEnabled = false;
+            catalogWindow.Closed += ClosedCatalog;
+        }
+
+        private void SaveInFile_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                Marshal.ReleaseComObject(xlRange);
+                Marshal.ReleaseComObject(xlWorksheet);
+                xlWorkbook.Close();
+                Marshal.ReleaseComObject(xlWorkbook);
+                xlApp.Quit();
+                Marshal.ReleaseComObject(xlApp);               
+            }
+            catch { MessageBox.Show("Файл не відкритий!"); }
+        }
+
+        private void Button_viev_words_Click(object sender, RoutedEventArgs e)
+        {
+            catalogWords = new CatalogWords();
+            catalogWords.Show();
         }
     }
 }

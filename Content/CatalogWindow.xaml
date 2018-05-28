@@ -7,11 +7,11 @@
         mc:Ignorable="d"
         Title="Каталог" Height="450" Width="500">
     <Grid x:Name="CatalogWindow1">
-        <ListBox x:Name="ListCatalog" HorizontalAlignment="Left" Height="160" Margin="10,10,0,0" VerticalAlignment="Top" Width="222"/>
-        <Button x:Name="ButtonUse" Content="Використати" HorizontalAlignment="Left" Margin="253,62,0,0" VerticalAlignment="Top" Width="75" Click="ButtonUse_Click"/>
-        <TreeView x:Name="TreeViewCatalog" HorizontalAlignment="Left" Height="234" Margin="10,175,0,0" VerticalAlignment="Top" Width="222"/>
-        <ListBox x:Name="ListBoxCatalog" HorizontalAlignment="Left" Height="234" Margin="237,175,0,0" VerticalAlignment="Top" Width="245"/>
-        <Button x:Name="Button_delete_catalog" Content="Видалити" HorizontalAlignment="Left" Margin="391,23,0,0" VerticalAlignment="Top" Width="75" Click="Button_delete_catalog_Click"/>
+        <ListBox x:Name="ListCatalog" HorizontalAlignment="Left" Height="160" Margin="10,10,0,0" VerticalAlignment="Top" Width="222" MouseLeftButtonUp="ListCatalog_MouseLeftButtonUp"/>
+        <Button x:Name="ButtonUse" Content="Використати" HorizontalAlignment="Left" Margin="237,35,0,0" VerticalAlignment="Top" Width="75" Click="ButtonUse_Click"/>
+        <TreeView x:Name="TreeViewCatalog" HorizontalAlignment="Left" Height="234" Margin="10,175,0,0" VerticalAlignment="Top" Width="222" MouseLeftButtonUp="TreeViewCatalog_MouseLeftButtonUp"/>
+        <ListBox x:Name="ListBoxCatalog" HorizontalAlignment="Left" Height="234" Margin="237,175,0,0" VerticalAlignment="Top" Width="245" MouseDoubleClick="ListBoxCatalog_MouseDoubleClick"/>
+        <Button x:Name="Button_delete_catalog" Content="Видалити" HorizontalAlignment="Left" Margin="237,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_delete_catalog_Click"/>
 
     </Grid>
 </Window>

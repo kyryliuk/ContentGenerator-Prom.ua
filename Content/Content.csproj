@@ -79,6 +79,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="CatalogWords.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="EditWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -94,9 +98,10 @@
     <Compile Include="CatalogWindow.xaml.cs">
       <DependentUpon>CatalogWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Data\Catalog.cs" />
+    <Compile Include="CatalogWords.xaml.cs">
+      <DependentUpon>CatalogWords.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Data\ExcelTypes.cs" />
-    <Compile Include="Data\Node.cs" />
     <Compile Include="EditWindow.xaml.cs">
       <DependentUpon>EditWindow.xaml</DependentUpon>
     </Compile>

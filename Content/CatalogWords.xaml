@@ -1,0 +1,21 @@
+﻿<Window x:Name="CatalogWords1" x:Class="Content.CatalogWords"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Content"
+        mc:Ignorable="d"
+        Title="CatalogWords" Height="450" Width="800">
+    <Grid>
+        <ListBox x:Name="ListFiles" HorizontalAlignment="Left" Height="109" Margin="10,10,0,0" VerticalAlignment="Top" Width="245" MouseLeftButtonUp="ListFiles_MouseLeftButtonUp"/>
+        <ListBox x:Name="ListGroupNames" HorizontalAlignment="Left" Height="285" Margin="260,124,0,0" VerticalAlignment="Top" Width="235" MouseDoubleClick="ListGroupNames_MouseDoubleClick"/>
+        <TreeView x:Name="TreeView" HorizontalAlignment="Left" Height="285" Margin="10,124,0,0" VerticalAlignment="Top" Width="245" MouseLeftButtonUp="TreeView_MouseLeftButtonUp"/>
+        <ListBox x:Name="ListKeyWords" HorizontalAlignment="Left" Height="285" Margin="547,124,0,0" VerticalAlignment="Top" Width="235"/>
+        <Button x:Name="Button_Add1" Content="Додати" HorizontalAlignment="Left" Margin="260,99,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="Button_delete1" Content="Видалити" HorizontalAlignment="Left" Margin="420,99,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="Button_edit1" Content="Редагувати" HorizontalAlignment="Left" Margin="340,99,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="Button_Add2" Content="Додати" HorizontalAlignment="Left" Margin="547,99,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="Button_delete2" Content="Видалити" HorizontalAlignment="Left" Margin="707,99,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="Button_edit2" Content="Редагувати" HorizontalAlignment="Left" Margin="627,99,0,0" VerticalAlignment="Top" Width="75"/>
+    </Grid>
+</Window>
