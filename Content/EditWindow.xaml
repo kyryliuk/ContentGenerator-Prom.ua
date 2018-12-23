@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Content"
         mc:Ignorable="d"
-        Title="" Height="450" Width="850">                  
+        Title="" Height="450" Width="879.67">                  
         
     <DockPanel>
 
@@ -116,12 +116,20 @@
                 <Button Command="AlignJustify" ToolTip="Align Justify">
                     <Image Source="Icons/AlignJustify.png"/>
                 </Button>
+                <Separator/>
+                <Label x:Name="Label_count" Content=""  Height="30" VerticalAlignment="Top" Width="62" FontSize="16"/>
+
             </ToolBar>
 
         </ToolBarTray>
 
-        <RichTextBox x:Name="richTextBox" AcceptsTab="True" VerticalScrollBarVisibility="Auto">
-            <FlowDocument/>
+        <RichTextBox x:Name="richTextBox" AcceptsTab="True" VerticalScrollBarVisibility="Auto" Width="868" TextChanged="richTextBox_TextChanged">
+            <FlowDocument>
+                <Paragraph>
+                    <InlineUIContainer FontSize="16" >
+                    </InlineUIContainer>
+                </Paragraph>
+            </FlowDocument>
         </RichTextBox>
 
     </DockPanel>

@@ -5,17 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Content"
         mc:Ignorable="d"
-        Title="CatalogWords" Height="450" Width="800">
+        Title="CatalogWords" Height="450" Width="970.436">
     <Grid>
-        <ListBox x:Name="ListFiles" HorizontalAlignment="Left" Height="109" Margin="10,10,0,0" VerticalAlignment="Top" Width="245" MouseLeftButtonUp="ListFiles_MouseLeftButtonUp"/>
-        <ListBox x:Name="ListGroupNames" HorizontalAlignment="Left" Height="285" Margin="260,124,0,0" VerticalAlignment="Top" Width="235" MouseDoubleClick="ListGroupNames_MouseDoubleClick"/>
-        <TreeView x:Name="TreeView" HorizontalAlignment="Left" Height="285" Margin="10,124,0,0" VerticalAlignment="Top" Width="245" MouseLeftButtonUp="TreeView_MouseLeftButtonUp"/>
-        <ListBox x:Name="ListKeyWords" HorizontalAlignment="Left" Height="285" Margin="547,124,0,0" VerticalAlignment="Top" Width="235"/>
-        <Button x:Name="Button_Add1" Content="Додати" HorizontalAlignment="Left" Margin="260,99,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="Button_delete1" Content="Видалити" HorizontalAlignment="Left" Margin="420,99,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="Button_edit1" Content="Редагувати" HorizontalAlignment="Left" Margin="340,99,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="Button_Add2" Content="Додати" HorizontalAlignment="Left" Margin="547,99,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="Button_delete2" Content="Видалити" HorizontalAlignment="Left" Margin="707,99,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="Button_edit2" Content="Редагувати" HorizontalAlignment="Left" Margin="627,99,0,0" VerticalAlignment="Top" Width="75"/>
+        <ListBox x:Name="ListFiles" BorderThickness="1" HorizontalAlignment="Left" Height="109" Margin="10,10,0,0" VerticalAlignment="Top" Width="245" MouseLeftButtonUp="ListFiles_MouseLeftButtonUp" SelectionChanged="ListFiles_SelectionChanged"/>
+        <ListBox x:Name="ListGroupNames" BorderThickness="1" HorizontalAlignment="Left" Height="285" Margin="260,42,0,0" VerticalAlignment="Top" Width="235" MouseDoubleClick="ListGroupNames_MouseDoubleClick" MouseLeftButtonUp="ListGroupNames_MouseLeftButtonUp"/>
+        <TreeView x:Name="TreeView" BorderThickness="1" HorizontalAlignment="Left" Height="285" Margin="10,124,0,0" VerticalAlignment="Top" Width="245" MouseLeftButtonUp="TreeView_MouseLeftButtonUp"/>
+        <Button x:Name="Button_Add1" Content="Додати" HorizontalAlignment="Left" Margin="260,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Add1_Click"/>
+        <Button x:Name="Button_delete1" Content="Видалити" HorizontalAlignment="Left" Margin="420,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_delete1_Click"/>
+        <Button x:Name="Button_edit1" Content="Редагувати" HorizontalAlignment="Left" Margin="340,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_edit1_Click"/>
+        <Button x:Name="Button_Add2" Content="Додати" HorizontalAlignment="Left" Margin="546,10,0,0" VerticalAlignment="Top" Width="74" Click="Button_Add2_Click"/>
+        <Button x:Name="Button_delete2" Content="Видалити" HorizontalAlignment="Left" Margin="878,10,0,0" VerticalAlignment="Top" Width="74" Click="Button_delete2_Click"/>
+        <Button x:Name="Button_edit2" Content="РедагуватиПарс" HorizontalAlignment="Left" Margin="626,10,0,0" VerticalAlignment="Top" Width="108" Click="Button_edit2_Click"/>
+        <Button x:Name="Save" Content="Зберегти" HorizontalAlignment="Left" Margin="614,362,0,0" VerticalAlignment="Top" Width="104" Click="Save_Click" Height="41"/>
+        <Button x:Name="UseInMain" Content="Використати" HorizontalAlignment="Left" Margin="318,362,0,0" VerticalAlignment="Top" Width="120" Click="UseInMain_Click" Height="41"/>
+        <ListView x:Name="ListKeyWords" HorizontalAlignment="Left" Height="285" Margin="546,42,0,0" VerticalAlignment="Top" Width="406" Background="#FFE2DCDC">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="200" DisplayMemberBinding="{Binding Path=ListValues}">СловоПарс</GridViewColumn>
+                    <GridViewColumn Width="200" DisplayMemberBinding="{Binding Path=ListValues1}" >СловоЗначення</GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="РедагуватиЗНАЧ" HorizontalAlignment="Left" Margin="739,10,0,0" VerticalAlignment="Top" Width="134" Click="Button_Click"/>
     </Grid>
 </Window>

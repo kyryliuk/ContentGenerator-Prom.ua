@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
 using GemBox.Document;
 using Microsoft.Win32;
 
@@ -151,6 +152,15 @@ namespace Content
             e.CanExecute = this.richTextBox != null && this.richTextBox.IsKeyboardFocused;
         }
 
-      
+        private void richTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var textRange = new TextRange(this.richTextBox.Document.ContentStart, this.richTextBox.Document.ContentEnd);
+            Label_count.Content = textRange.Text.Length;
+            if (textRange.Text.Length > 1024)
+            {
+                Label_count.Background = System.Windows.Media.Brushes.Red;
+            }
+            else { Label_count.Background = System.Windows.Media.Brushes.White; }            
+        }
     }
 }

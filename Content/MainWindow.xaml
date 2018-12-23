@@ -1,45 +1,64 @@
-﻿<Window x:Class="Content.MainWindow"
+﻿<Controls:MetroWindow x:Class="Content.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"      
         xmlns:local="clr-namespace:Content"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
-        Title="Content" Height="450" Width="700">
-    <Grid xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit">
+        Title="Content" Height="788.182" Width="731.5">
 
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="88*"/>
+            <ColumnDefinition Width="85*"/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="ButtonPutContent"  Content="Маркетинг" HorizontalAlignment="Left" Margin="155,44,0,0" VerticalAlignment="Top" Width="98" Height="34" Click="ButtonPutContent_Click"/>
 
-        <toolkit:BusyIndicator x:Name="BusyIndicator" Margin="-219,34,721,277" BusyContent="Image is downloading ... Please wait..." IsBusy="False">
-
-        </toolkit:BusyIndicator>
-        <Button x:Name="ButtonPutContent" Content="Контентизувати" HorizontalAlignment="Left" Margin="281,255,0,0" VerticalAlignment="Top" Width="99" Height="34" Click="ButtonPutContent_Click"/>
-
-        <Button x:Name="Button1" Content="Перевірити" HorizontalAlignment="Left" Margin="279,294,0,0" VerticalAlignment="Top" Width="101" Click="Button1_Click" Height="26"/>
-        <TreeView x:Name="tree" HorizontalAlignment="Left" Height="352" Margin="10,34,0,0" VerticalAlignment="Top" Width="265" MouseLeftButtonUp="tree_MouseLeftButtonUp"/>
-        <ListBox x:Name="ListBoxInfo" HorizontalAlignment="Left" Height="215" Margin="279,34,0,0" VerticalAlignment="Top" Width="270" MouseDoubleClick="ListBoxInfo_MouseDoubleClick"/>
-        <Button x:Name="ButtonAdd" Content="Додати" HorizontalAlignment="Left" Margin="554,34,0,0" VerticalAlignment="Top" Width="75" Click="ButtonAdd_Click" Height="23"/>
-        <Button x:Name="ButtonDelete" Content="Видалити" HorizontalAlignment="Left" Margin="554,176,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
-        <Button x:Name="ButtonEdit" Content="Редагувати" HorizontalAlignment="Left" Margin="554,62,0,0" VerticalAlignment="Top" Width="75" Click="ButtonEdit_Click"/>
-        <Button Content="Зберегти" HorizontalAlignment="Left" Margin="554,228,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_2" Height="21"/>
-        <Menu x:Name="Menu" Background="DarkCyan" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="275">
-            <MenuItem x:Name="File_menu"  Header="Файл" Foreground="Azure" FontSize="16">
-                <MenuItem x:Name="Open_file" Header="Відкрити" FontSize="12" Foreground="Black" Click="MenuItem_Click_Open"/>
-                <MenuItem x:Name="Exit_Pr" Header="Вихід" FontSize="12" Foreground="Black" Click="MenuItem_Click_Exit"/>
+        <Button x:Name="Button1" Content="Перевірити" HorizontalAlignment="Left" Margin="43,44,0,0" VerticalAlignment="Top" Width="101" Click="Button1_Click" Height="34"/>
+        <TreeView x:Name="tree" BorderThickness="1" Margin="10,140,7,60" MouseLeftButtonUp="tree_MouseLeftButtonUp"/>
+        <ListBox x:Name="ListBoxInfo" BorderThickness="1" Margin="11,140,10,60" MouseDoubleClick="ListBoxInfo_MouseDoubleClick" Grid.Column="1"/>
+        <Button x:Name="ButtonAdd" Content="Додати" HorizontalAlignment="Left" Margin="11,105,0,0" VerticalAlignment="Top" Width="75" Click="ButtonAdd_Click" Height="30" Grid.Column="1"/>
+        <Button x:Name="ButtonDelete" Content="Видалити" HorizontalAlignment="Left" Margin="171,105,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1" Height="30" Grid.Column="1"/>
+        <Button x:Name="ButtonEdit" Content="Редагувати" HorizontalAlignment="Left" Margin="91,105,0,0" VerticalAlignment="Top" Width="75" Click="ButtonEdit_Click" Height="30" Grid.Column="1"/>
+        <Button Content="Зберегти" HorizontalAlignment="Left" Margin="251,105,0,0" VerticalAlignment="Top" Width="83" Click="Button_Click_2" Height="30" Grid.Column="1"/>
+        <Menu x:Name="Menu" HorizontalAlignment="Left" Height="33" VerticalAlignment="Top" Width="275">
+            <MenuItem x:Name="File_menu"  Header="Файл"  FontSize="16">
+                <MenuItem x:Name="Open_file" Header="Відкрити" FontSize="12"  Click="MenuItem_Click_Open"/>
+                <MenuItem x:Name="Exit_Pr" Header="Вихід" FontSize="12" Click="MenuItem_Click_Exit"/>
             </MenuItem>
-            <MenuItem x:Name="Set_connection" Header="Налаштування" FontSize="16" Foreground="Azure">
-                <MenuItem x:Name="Button_viev_catalogs" FontSize="12" Header="Каталоги резервних копій" Foreground="Black" Click="MenuItem_Click_catalog_views"/>
-                <MenuItem x:Name="Button_viev_words" FontSize="12" Header="Каталог слів" Foreground="Black" Click="Button_viev_words_Click"/>
+            <MenuItem x:Name="Set_connection" Header="Налаштування" FontSize="16">
+                <MenuItem x:Name="Button_viev_catalogs" FontSize="12" Header="Каталоги резервних копій"  Click="MenuItem_Click_catalog_views"/>
+                <MenuItem x:Name="Button_viev_words" FontSize="12" Header="Каталог слів"  Click="Button_viev_words_Click"/>
+                <MenuItem x:Name="Button_Regex" FontSize="12" Header="Парсинг"  Click="Button_Regex_Click"/>
+                <MenuItem x:Name="Button_KeyWords" FontSize="12" Header="Ключові слова" Click="Button_KeyWords_Click"  />
+                <MenuItem x:Name="Button_Restruct" FontSize="12" Header="Структура" Click="Button_Restruct_Click"  />
             </MenuItem>
-            <MenuItem x:Name="Help_menu" Header="Допомога" FontSize="16" Foreground="Azure">
-                <MenuItem x:Name="Help_window" FontSize="12" Header="Документація" Foreground="Black" Click="MenuItem_Click_Help"/>
-                <MenuItem x:Name="Inform_window" FontSize="12" Header="Про програму" Foreground="Black" Click="MenuItem_Click_About"/>
+            <MenuItem x:Name="Help_menu" Header="Допомога" FontSize="16" >
+                <MenuItem x:Name="Help_window" FontSize="12" Header="Документація"  Click="MenuItem_Click_Help"/>
+                <MenuItem x:Name="Inform_window" FontSize="12" Header="Про програму" Click="MenuItem_Click_About"/>
             </MenuItem>
         </Menu>
-        <RadioButton x:Name="Radio1" Content="Залишити характеристики" HorizontalAlignment="Left" Margin="386,255,0,0" VerticalAlignment="Top" IsChecked="True"/>
-        <RadioButton x:Name="Radio2" Content="Згенерувати нові" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="386,277,0,0"/>
-        <ProgressBar x:Name="ProgressBar1" HorizontalAlignment="Left" Height="18" Margin="10,391,0,0" VerticalAlignment="Top" Width="674"/>
-        <Button x:Name="SaveInFile" Content="Зберегти в файл" HorizontalAlignment="Left" Margin="583,360,0,0" VerticalAlignment="Top" Width="99" Height="26" Click="SaveInFile_Click"/>
+        <RadioButton x:Name="Radio1" Content="Старі" HorizontalAlignment="Left" Margin="259,52,0,0" VerticalAlignment="Top" IsChecked="True" Height="18" Width="52"/>
+        <RadioButton x:Name="Radio2" Content="Нові" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="259,91,0,0" Height="18" Width="49"/>
+        <ProgressBar x:Name="ProgressBar1" Margin="10,0,10,6" Grid.ColumnSpan="2" Height="18" VerticalAlignment="Bottom"/>
+        <Button x:Name="SaveInFile" Content="Зберегти" HorizontalAlignment="Left" Margin="155,83,0,0" VerticalAlignment="Top" Width="98" Height="34" Click="SaveInFile_Click"/>
+        <Button x:Name="GenerateWords" Content="Слова" HorizontalAlignment="Left" Margin="43,83,0,0" VerticalAlignment="Top" Width="101" Click="GenerateWords_Click" Height="34"/>
+        <Button x:Name="AutoGenerate" Background="Aqua" Content="Автоматични режим" HorizontalAlignment="Left" Margin="175,18,0,0" VerticalAlignment="Top" Width="155" Click="AutoGenerate_Click" Height="42" Grid.Column="1"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="92" Margin="10,38,0,0" VerticalAlignment="Top" Width="331" RenderTransformOrigin="0.5,0.5"/>
+        <Button Content="Парсинг" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="71" Height="26" Click="Button_Click_3" Grid.Column="1"/>
+        <Label x:Name="label1" Content="Реструктиризація"  HorizontalAlignment="Left" Margin="10,702,0,0" VerticalAlignment="Top" Background="#FFFD0000" Width="115" FontWeight="Bold"/>
+        <Label x:Name="label2" Content="Помилки" HorizontalAlignment="Left" Margin="125,702,0,0" VerticalAlignment="Top" Background="#FFFD0000" Width="68" FontWeight="Bold"/>
+        <Label x:Name="label3" Content="Групові характеристики" HorizontalAlignment="Left" Margin="343,702,0,0" VerticalAlignment="Top" Background="#FFFD0000" Width="152" FontWeight="Bold" Grid.ColumnSpan="2"/>
+        <Label x:Name="label4" Content="Маркетинг" HorizontalAlignment="Left" Margin="209,702,0,0" VerticalAlignment="Top" Background="#FFFD0000" Grid.Column="1" Width="75" FontWeight="Bold"/>
+        <Label x:Name="label5" Content="Регулярки парсинг" HorizontalAlignment="Left" Margin="193,702,0,0" VerticalAlignment="Top" Background="#FFFD0000" Width="124" FontWeight="Bold"/>
+        <Label x:Name="label5_Copy" Content="0" HorizontalAlignment="Center" Margin="315,702,25,0" VerticalAlignment="Top" Background="#FFFD0000" Width="28" FontWeight="Bold"/>
+        <Label x:Name="label6" Content="Усунення (. ,)" HorizontalAlignment="Left" Margin="120,702,0,0" VerticalAlignment="Top" Background="#FFFD0000" Grid.Column="1" Width="95" FontWeight="Bold"/>
+        <Button x:Name="Koma" Content="Koma" HorizontalAlignment="Left" Margin="0,41,0,0" VerticalAlignment="Top" Width="71" Click="Koma_Click" Grid.Column="1"/>
+        <Button x:Name="Button_KeyWords1" Content="Ключові Слова" Grid.Column="1" HorizontalAlignment="Left" Margin="0,73,0,0" VerticalAlignment="Top" Width="107" Click="Button_KeyWords1_Click"/>
+        <Label x:Name="label4_Copy" Content="Ключові" HorizontalAlignment="Left" Margin="284,702,0,0" VerticalAlignment="Top" Background="#FFFD0000" Grid.Column="1" Width="62" FontWeight="Bold"/>
+        <Button x:Name="ButtonRestruct" Content="RESTRUCT" Grid.Column="1" HorizontalAlignment="Left" Margin="120,73,0,0" VerticalAlignment="Top" Width="75" Click="ButtonRestruct_Click"/>
 
 
     </Grid>
-</Window>
+</Controls:MetroWindow>
